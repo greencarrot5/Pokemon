@@ -1,6 +1,7 @@
 class Pokemon:
   def __init__(self, name, level, kind, max_health, cur_health, knocked_state,experience, hitpoints, attack_speed):
     self.experience = experience
+    self.experience_needed = 50
     self.name = name
     self.level = level
     self.max_health = max_health
@@ -18,15 +19,19 @@ class Pokemon:
   def update_experience(self, state):
     if state == True:
       self.experience += 10
-      if self.experience >= 50:
+      if self.experience >= self.experience_needed:
         self.level += 1
-        self.experience = self.experience-50
+        self.experience = self.experience-self.experience_needed
+        self.experience_needed += 5
         hitpoints += 2
         print("Level upppppp")
     else:
       self.experience -= 5
   def regain_health(self, points):
-    self.cur_health += points
+    if self.cur_health + points <= self.max_health:
+        self.cur_health += points
+    else:
+        self.cur_health = self.max_health
     print("health regained")
 
   def revive_pokemon(self):
